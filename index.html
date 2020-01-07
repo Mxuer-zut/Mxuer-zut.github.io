@@ -152,6 +152,144 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-warehouse-network" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/01/07/warehouse-network/">warehouse-network</a>
+    </h1>
+  
+
+        
+        <a href="/2020/01/07/warehouse-network/" class="archive-article-date">
+  	<time datetime="2020-01-07T07:14:23.232Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-07</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="一、在启动orderer主机下完成："><a href="#一、在启动orderer主机下完成：" class="headerlink" title="一、在启动orderer主机下完成："></a>一、在启动<em>orderer</em>主机下完成：</h4><p>1.将本地Warehouse-network/orderer-VM/cups文件拷贝到虚拟机go/src/github.com/hyperledger/fabric/目录下面</p>
+<p>2.检查docker是否启动：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>​      注：若docker容器有在运行的，用如下命令关闭</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f $(docker ps -aq)</span><br></pre></td></tr></table></figure>
+
+<p>3.启动orderer节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f docker-orderer.yaml up -d</span><br></pre></td></tr></table></figure>
+
+<p>4.查看docker是否启动成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<h4 id="二、在启动peer01主机下完成："><a href="#二、在启动peer01主机下完成：" class="headerlink" title="二、在启动peer01主机下完成："></a>二、在启动<em>peer01</em>主机下完成：</h4><p>1.将example.go复制到chaincode/go下面</p>
+<p>2.启动peer01：</p>
+<p>​         注：启动peer01之前，需要打开docker-peer01.yaml文件，修改orderer以及各peer对应的IP地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f docker-peer01.yaml up -d</span><br></pre></td></tr></table></figure>
+
+<p>2.进入cli容器中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it cli bash</span><br></pre></td></tr></table></figure>
+
+<p>3.创建通道</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer channel create -o orderer.example.com:7050 -c mychannel -t 50s -f .&#x2F;channel-artifacts&#x2F;channel.tx</span><br></pre></td></tr></table></figure>
+
+<p>4.加入通道</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer channel join -b mychannel.block</span><br></pre></td></tr></table></figure>
+
+<p>5.链码的安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mychannel -p github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;chaincode&#x2F;go -v 1.0</span><br></pre></td></tr></table></figure>
+
+<p>6.链码的实例化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -o 192.168.1.114:7050 -C mychannel -n mychannel -c &#39;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;A&quot;,&quot;100&quot;,&quot;B&quot;,&quot;100&quot;]&#125;&#39; -P &quot;AND (&#39;Org1MSP.member&#39;)&quot; -v 1.0 \</span><br></pre></td></tr></table></figure>
+
+<p>7.链码的查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode query -C mychannel -n mychannel -c &#39;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;A&quot;]&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<h4 id="三，peer02启动之前的准备工作："><a href="#三，peer02启动之前的准备工作：" class="headerlink" title="三，peer02启动之前的准备工作："></a>三，peer02启动之前的准备工作：</h4><p>1.环境准备：peer01主机的cups文件夹下面</p>
+<p>2.通过如下命令将mychannel.block文件从cli拷贝到本机cups文件夹下面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp cli:&#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;peer&#x2F;mychannel.block .&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p> 3.进入容器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it cli bash</span><br></pre></td></tr></table></figure>
+
+<p>4.打包链码，并将打包后的链码发送给peer02主机下的cups文件下(注：pro5，192.168.1.150是peer02虚拟机名称及ip)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1 peer chaincode package -n mychannel -p github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;chaincode&#x2F;go -v 1.0 mychannel.pak    </span><br><span class="line"></span><br><span class="line">2 scp -r mychannel.pak pro5@192.168.1.150:&#x2F;home&#x2F;pro5&#x2F;go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups</span><br></pre></td></tr></table></figure>
+
+<p>5.将三台虚拟机（orderer，peer01，peer02）的防火墙全部关闭</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw disable</span><br></pre></td></tr></table></figure>
+
+<p>6.三台虚拟机（sudo gedit etc/hosts）的IP配置好</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.114 orderer orderer.example.com</span><br><span class="line">192.168.1.129 peer01 peer0.org1.example.com</span><br><span class="line">192.168.1.150 peer02 peer0.org2.example.com</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="四，在启动的peer02主机下完成："><a href="#四，在启动的peer02主机下完成：" class="headerlink" title="四，在启动的peer02主机下完成："></a>四，在启动的peer02主机下完成：</h4><p>1.copy相关文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. scp -r cups@192.168.1.129:&#x2F;home&#x2F;cups&#x2F;go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;crypto-config  .&#x2F;</span><br><span class="line">   #copy peer01主机cups文件夹下的crypto-cofig文件</span><br><span class="line">2. scp -r cups@192.168.1.129:&#x2F;home&#x2F;cups&#x2F;go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;chaincode  .&#x2F;</span><br><span class="line">   #copy peer01主机cups文件夹下的chaincode文件 </span><br><span class="line">3. scp -r cups@192.168.1.129:&#x2F;home&#x2F;cups&#x2F;go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;mychannel.block  .&#x2F;</span><br><span class="line">   #copy peer01主机cups文件夹下的mychannel.block文件</span><br><span class="line">4. scp -r mxcc@192.168.1.114:&#x2F;home&#x2F;mxcc&#x2F;go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;docker-peer02.yaml  .&#x2F;    #copy orderer主机cups文件夹下的docker-peer02.yaml文件</span><br></pre></td></tr></table></figure>
+
+<p>2.关闭此虚拟机运行的docker</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f $(docker ps -aq)</span><br></pre></td></tr></table></figure>
+
+<p>3.启动peer02</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f docker-peer02.yaml up -d</span><br></pre></td></tr></table></figure>
+
+<p>4.进入容器中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it cli bash</span><br></pre></td></tr></table></figure>
+
+<p>5.将peer02加入通道</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer channel join -b .&#x2F;channel-artifacts&#x2F;mychannel.block</span><br></pre></td></tr></table></figure>
+
+<p>6.链码安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install mychannel.pak</span><br></pre></td></tr></table></figure>
+
+<p> 7.链码查询：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode query -C mychannel -n mychannel -c &#39;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;A&quot;]&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/01/07/warehouse-network/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Insurance-sample" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -486,7 +624,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 Mxuer-zut
+    		&copy; 2020 Mxuer-zut
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
