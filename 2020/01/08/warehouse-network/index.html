@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="https://mxuer-zut.github.io">
   <title>warehouse-network | mx的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、在启动orderer主机下完成：1.将本地Warehouse-network&#x2F;orderer-VM&#x2F;cups文件拷贝到虚拟机go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;目录下面 2.检查docker是否启动： 1docker ps  ​      注：若docker容器有在运行的，用如下命令关闭 1docker rm -f $(docker ps -aq)  3.">
+  <meta name="description" content="一、在启动orderer主机下完成：准备工作：  sudo mkdir go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups  sudo gedit &#x2F;etc&#x2F;hosts  192.168.1.114 orderer orderer.example.com       192.168.1.129 peer01 peer0.org1.example.com">
 <meta property="og:type" content="article">
 <meta property="og:title" content="warehouse-network">
-<meta property="og:url" content="https:&#x2F;&#x2F;mxuer-zut.github.io&#x2F;2020&#x2F;01&#x2F;07&#x2F;warehouse-network&#x2F;index.html">
+<meta property="og:url" content="https:&#x2F;&#x2F;mxuer-zut.github.io&#x2F;2020&#x2F;01&#x2F;08&#x2F;warehouse-network&#x2F;index.html">
 <meta property="og:site_name" content="mx的个人博客">
-<meta property="og:description" content="一、在启动orderer主机下完成：1.将本地Warehouse-network&#x2F;orderer-VM&#x2F;cups文件拷贝到虚拟机go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;目录下面 2.检查docker是否启动： 1docker ps  ​      注：若docker容器有在运行的，用如下命令关闭 1docker rm -f $(docker ps -aq)  3.">
+<meta property="og:description" content="一、在启动orderer主机下完成：准备工作：  sudo mkdir go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups  sudo gedit &#x2F;etc&#x2F;hosts  192.168.1.114 orderer orderer.example.com       192.168.1.129 peer01 peer0.org1.example.com">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-01-07T07:14:23.232Z">
-<meta property="article:modified_time" content="2020-01-07T07:11:59.879Z">
+<meta property="article:published_time" content="2020-01-08T07:41:23.803Z">
+<meta property="article:modified_time" content="2020-01-08T07:39:28.524Z">
 <meta property="article:author" content="Mxuer-zut">
 <meta name="twitter:card" content="summary">
   
@@ -166,15 +166,22 @@
   
 
         
-        <a href="/2020/01/07/warehouse-network/" class="archive-article-date">
-  	<time datetime="2020-01-07T07:14:23.232Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-07</time>
+        <a href="/2020/01/08/warehouse-network/" class="archive-article-date">
+  	<time datetime="2020-01-08T07:41:23.803Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-01-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="一、在启动orderer主机下完成："><a href="#一、在启动orderer主机下完成：" class="headerlink" title="一、在启动orderer主机下完成："></a>一、在启动<em>orderer</em>主机下完成：</h4><p>1.将本地Warehouse-network/orderer-VM/cups文件拷贝到虚拟机go/src/github.com/hyperledger/fabric/目录下面</p>
+        <h4 id="一、在启动orderer主机下完成："><a href="#一、在启动orderer主机下完成：" class="headerlink" title="一、在启动orderer主机下完成："></a>一、在启动<em>orderer</em>主机下完成：</h4><p>准备工作：</p>
+<p> sudo mkdir go/src/github.com/hyperledger/fabric/cups</p>
+<p> sudo gedit /etc/hosts </p>
+<p>192.168.1.114 orderer orderer.example.com<br>       192.168.1.129 peer01 peer0.org1.example.com<br>       192.168.1.150 peer02 peer0.org2.example.com</p>
+<p> cryptogen generate –config=crypto-config.yaml </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 我们先创建一个目录 channel-artifacts 存储生成的文件, 目的是为了和后边的配置文件模板的配置项保持一致</span><br><span class="line">$ sudo mkdir channel-artifacts</span><br><span class="line">$ configtxgen -profile ThreeOrgsOrdererGenesis -outputBlock .&#x2F;channel-artifacts&#x2F;genesis.block</span><br><span class="line">  # 生成创始块文件</span><br><span class="line">$ configtxgen -profile ThreeOrgsChannel -outputCreateChannelTx .&#x2F;channel-artifacts&#x2F;channel.tx -channelID mychannel</span><br><span class="line">  #生成通道文件</span><br></pre></td></tr></table></figure>
+
+<p>1.将本地Warehouse-network/orderer-VM/cups文件拷贝到虚拟机go/src/github.com/hyperledger/fabric/目录下面</p>
 <p>2.检查docker是否启动：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
 
@@ -188,26 +195,29 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
 
 <h4 id="二、在启动peer01主机下完成："><a href="#二、在启动peer01主机下完成：" class="headerlink" title="二、在启动peer01主机下完成："></a>二、在启动<em>peer01</em>主机下完成：</h4><p>1.将example.go复制到chaincode/go下面</p>
-<p>2.启动peer01：</p>
+<p>2.远程copy文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scp -r mxcc@192.168.1.114:&#x2F;home&#x2F;mxcc&#x2F;go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;channel-artifacts .&#x2F;</span><br><span class="line">scp -r master@192.168.1.129:&#x2F;home&#x2F;mxcc&#x2F;go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;crypto-config .&#x2F;</span><br><span class="line">scp -r master@192.168.1.129:&#x2F;home&#x2F;mxcc&#x2F;go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;docker-peer01.yaml .&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>3.启动peer01：</p>
 <p>​         注：启动peer01之前，需要打开docker-peer01.yaml文件，修改orderer以及各peer对应的IP地址</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f docker-peer01.yaml up -d</span><br></pre></td></tr></table></figure>
 
-<p>2.进入cli容器中</p>
+<p>4.进入cli容器中</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it cli bash</span><br></pre></td></tr></table></figure>
 
-<p>3.创建通道</p>
+<p>5.创建通道</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer channel create -o orderer.example.com:7050 -c mychannel -t 50s -f .&#x2F;channel-artifacts&#x2F;channel.tx</span><br></pre></td></tr></table></figure>
 
-<p>4.加入通道</p>
+<p>6.加入通道</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer channel join -b mychannel.block</span><br></pre></td></tr></table></figure>
 
-<p>5.链码的安装</p>
+<p>7.链码的安装</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mychannel -p github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;chaincode&#x2F;go -v 1.0</span><br></pre></td></tr></table></figure>
 
-<p>6.链码的实例化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -o 192.168.1.114:7050 -C mychannel -n mychannel -c &#39;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;A&quot;,&quot;100&quot;,&quot;B&quot;,&quot;100&quot;]&#125;&#39; -P &quot;AND (&#39;Org1MSP.member&#39;)&quot; -v 1.0 \</span><br></pre></td></tr></table></figure>
+<p>8.链码的实例化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode instantiate -o 192.168.1.114:7050 -C mychannel -n mychannel -c &#39;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;A&quot;,&quot;100&quot;,&quot;B&quot;,&quot;100&quot;]&#125;&#39; -P &quot;AND (&#39;Org1MSP.member&#39;)&quot; -v 1.0</span><br></pre></td></tr></table></figure>
 
-<p>7.链码的查询</p>
+<p>9.链码的查询</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode query -C mychannel -n mychannel -c &#39;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;A&quot;]&#125;&#39;</span><br></pre></td></tr></table></figure>
 
 <h4 id="三，peer02启动之前的准备工作："><a href="#三，peer02启动之前的准备工作：" class="headerlink" title="三，peer02启动之前的准备工作："></a>三，peer02启动之前的准备工作：</h4><p>1.环境准备：peer01主机的cups文件夹下面</p>
@@ -249,6 +259,10 @@
 
 <p> 7.链码查询：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode query -C mychannel -n mychannel -c &#39;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;A&quot;]&#125;&#39;</span><br></pre></td></tr></table></figure>
+
+<h5 id="最后再补一句，很重要！！！！！！"><a href="#最后再补一句，很重要！！！！！！" class="headerlink" title="最后再补一句，很重要！！！！！！"></a>最后再补一句，很重要！！！！！！</h5><p><em>如果想要在此网络上再跑通其它的链码，建议建议把通道名称和链码的名称该以下，不然实例化的时候会出错</em></p>
+<p><em>例如将相关命令改成如下形式：</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$configtxgen -profile ThreeOrgsChannel -outputCreateChannelTx .&#x2F;channel-artifacts&#x2F;mych.tx -channelID mych          #生成通道</span><br><span class="line">$peer channel create -o orderer.example.com:7050 -c mych -t 50s -f .&#x2F;channel-artifacts&#x2F;mych.tx</span><br><span class="line">$peer channel join -b mych.block</span><br><span class="line">peer chaincode install -n mych -p github.com&#x2F;hyperledger&#x2F;fabric&#x2F;cups&#x2F;chaincode&#x2F;go -v 1.0</span><br><span class="line">peer chaincode instantiate -n mych -v 0 -c &#39;&#123;&quot;Args&quot;:[]&#125;&#39; -C mych</span><br></pre></td></tr></table></figure>
 
 
       
@@ -329,7 +343,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://mxuer-zut.github.io/2020/01/07/warehouse-network/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://mxuer-zut.github.io/2020/01/08/warehouse-network/" alt="微信分享二维码">
     </div>
 </div>
 
