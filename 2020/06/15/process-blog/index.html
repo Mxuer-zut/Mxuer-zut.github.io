@@ -6,22 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://mxuer-zut.github.io">
-  <title>01ubuntu搭建fabric1.4.1及运行first-network | mx的个人博客</title>
+  <title>process-blog | mx的个人博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Hyperledger Fabric1.4 环境搭建通过对网上资料和书籍的学习，开始对Hyperledger Fabric1.4基础环境搭建。本文开始介绍实践操作，先介绍Fabric基础环境搭建，采用的操作系统为Ubuntu64位,依次介绍GO语言环境安装、Docker安装、Docker-Compose安装和Fabric安装，最终完成可使用的Fabric环境。 我安装的步骤基本上都是跟着small">
+  <meta name="description" content="hexo文件夹下使用如下命令新建md文件 hexo n 文件名 在此目录下E:\blog-tools\Workspaces\hexo\source\_posts  会看见自己建的md文件 之后 123hexo generate  &#x2F;&#x2F; 简写：hexo g，生成静态文件，会在当前目录下生成一个public文件夹hexo server       &#x2F;&#x2F; 简写：h">
 <meta property="og:type" content="article">
-<meta property="og:title" content="01ubuntu搭建fabric1.4.1及运行first-network">
-<meta property="og:url" content="https:&#x2F;&#x2F;mxuer-zut.github.io&#x2F;2020&#x2F;06&#x2F;15&#x2F;01ubuntu%E6%90%AD%E5%BB%BAfabric1.4.1%E5%8F%8A%E8%BF%90%E8%A1%8Cfirst-network&#x2F;index.html">
+<meta property="og:title" content="process-blog">
+<meta property="og:url" content="https:&#x2F;&#x2F;mxuer-zut.github.io&#x2F;2020&#x2F;06&#x2F;15&#x2F;process-blog&#x2F;index.html">
 <meta property="og:site_name" content="mx的个人博客">
-<meta property="og:description" content="Hyperledger Fabric1.4 环境搭建通过对网上资料和书籍的学习，开始对Hyperledger Fabric1.4基础环境搭建。本文开始介绍实践操作，先介绍Fabric基础环境搭建，采用的操作系统为Ubuntu64位,依次介绍GO语言环境安装、Docker安装、Docker-Compose安装和Fabric安装，最终完成可使用的Fabric环境。 我安装的步骤基本上都是跟着small">
+<meta property="og:description" content="hexo文件夹下使用如下命令新建md文件 hexo n 文件名 在此目录下E:\blog-tools\Workspaces\hexo\source\_posts  会看见自己建的md文件 之后 123hexo generate  &#x2F;&#x2F; 简写：hexo g，生成静态文件，会在当前目录下生成一个public文件夹hexo server       &#x2F;&#x2F; 简写：h">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https:&#x2F;&#x2F;mxuer-zut.github.io&#x2F;2020&#x2F;06&#x2F;15&#x2F;01ubuntu%E6%90%AD%E5%BB%BAfabric1.4.1%E5%8F%8A%E8%BF%90%E8%A1%8Cfirst-network&#x2F;C:%5CUsers%5C%E9%A9%AC%E6%81%A9%E9%98%B3%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200602191348983.png">
-<meta property="og:image" content="https:&#x2F;&#x2F;mxuer-zut.github.io&#x2F;2020&#x2F;06&#x2F;15&#x2F;01ubuntu%E6%90%AD%E5%BB%BAfabric1.4.1%E5%8F%8A%E8%BF%90%E8%A1%8Cfirst-network&#x2F;Users&#x2F;马恩阳&#x2F;AppData&#x2F;Roaming&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20200602192201056.png">
-<meta property="article:published_time" content="2020-06-15T08:58:56.874Z">
-<meta property="article:modified_time" content="2020-06-03T00:34:03.159Z">
+<meta property="article:published_time" content="2020-06-15T11:13:27.130Z">
+<meta property="article:modified_time" content="2020-06-15T11:20:00.377Z">
 <meta property="article:author" content="Mxuer-zut">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;mxuer-zut.github.io&#x2F;2020&#x2F;06&#x2F;15&#x2F;01ubuntu%E6%90%AD%E5%BB%BAfabric1.4.1%E5%8F%8A%E8%BF%90%E8%A1%8Cfirst-network&#x2F;C:%5CUsers%5C%E9%A9%AC%E6%81%A9%E9%98%B3%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200602191348983.png">
   
     <link rel="alternative" href="/atom.xml" title="mx的个人博客" type="application/atom+xml">
   
@@ -157,240 +154,32 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-01ubuntu搭建fabric1.4.1及运行first-network" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-process-blog" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      01ubuntu搭建fabric1.4.1及运行first-network
+      process-blog
     </h1>
   
 
         
-        <a href="/2020/06/15/01ubuntu%E6%90%AD%E5%BB%BAfabric1.4.1%E5%8F%8A%E8%BF%90%E8%A1%8Cfirst-network/" class="archive-article-date">
-  	<time datetime="2020-06-15T08:58:56.874Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-15</time>
+        <a href="/2020/06/15/process-blog/" class="archive-article-date">
+  	<time datetime="2020-06-15T11:13:27.130Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-15</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Hyperledger-Fabric1-4-环境搭建"><a href="#Hyperledger-Fabric1-4-环境搭建" class="headerlink" title="Hyperledger Fabric1.4 环境搭建"></a>Hyperledger Fabric1.4 环境搭建</h1><p>通过对网上资料和书籍的学习，开始对Hyperledger Fabric1.4基础环境搭建。本文开始介绍实践操作，先介绍Fabric基础环境搭建，采用的操作系统为Ubuntu64位,依次介绍GO语言环境安装、Docker安装、Docker-Compose安装和Fabric安装，最终完成可使用的Fabric环境。</p>
-<p>我安装的步骤基本上都是跟着smallone233他的教程整理的。<a href="https://blog.csdn.net/smallone233/article/details/86569536" target="_blank" rel="noopener">https://blog.csdn.net/smallone233/article/details/86569536</a></p>
-<p>中间也遇到了一些错误，走了不少弯路，不过问题也一步步的解决了。</p>
-<ul>
-<li><input checked disabled type="checkbox"> <h2 id="更换系统软件源"><a href="#更换系统软件源" class="headerlink" title="更换系统软件源"></a>更换系统软件源</h2><p>更换系统软件源可以提高后面一些配置文件和镜像的下载速度。</p>
-<p><img src="/2020/06/15/01ubuntu%E6%90%AD%E5%BB%BAfabric1.4.1%E5%8F%8A%E8%BF%90%E8%A1%8Cfirst-network/C:%5CUsers%5C%E9%A9%AC%E6%81%A9%E9%98%B3%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200602191348983.png" alt="image-20200602191348983"></p>
-<p>进入system setting，然后点击software and update，修改download from，选择阿里云源，退出并加载就行了。</p>
-</li>
-<li><input checked disabled type="checkbox"> <p>安装常用工具</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install vim</span><br><span class="line">sudo apt-get install git</span><br><span class="line">sudo apt-get install curl</span><br><span class="line">sudo apt-get install wget</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-<ul>
-<li><input checked disabled type="checkbox"> <h2 id="GO语言环境安装"><a href="#GO语言环境安装" class="headerlink" title="GO语言环境安装"></a>GO语言环境安装</h2><ol>
-<li><p>进入此go网站：<a href="https://golang.google.cn/dl/" target="_blank" rel="noopener">https://golang.google.cn/dl/</a></p>
-</li>
-<li><img src="/2020/06/15/01ubuntu%E6%90%AD%E5%BB%BAfabric1.4.1%E5%8F%8A%E8%BF%90%E8%A1%8Cfirst-network/Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602192201056.png" alt="image-20200602192201056" style="zoom: 33%;">
-</li>
-<li><p>下载最新版本的压缩版的go1.14.4.linux-amd64.tar.gz到本地</p>
-</li>
-<li><p>安装和配置环境变量</p>
-<ul>
-<li><p>首先需要将本地下载的go压缩包上传到虚拟机中。</p>
-</li>
-<li><p>接下来我们需要将压缩包解压，并拷贝到指定的目录下，所以在终端继续执行以下命令：</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar -xzf go1.14.4.linux-amd64.tar.gz -C &#x2F;usr&#x2F;local</span><br></pre></td></tr></table></figure>
-
-<p>解压到/usr/local目录下，该目录下会有一个go文件夹。</p>
-<ul>
-<li><p>然后编辑当前环境变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~&#x2F;.profile</span><br></pre></td></tr></table></figure>
-
-
-
-</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<pre><code>-  添加如下，然后退出保存：
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export GOROOT&#x3D;&quot;&#x2F;usr&#x2F;local&#x2F;go&quot;</span><br><span class="line">export GOPATH&#x3D;$HOME&#x2F;go</span><br><span class="line">export GOBIN&#x3D;$GOROOT&#x2F;bin</span><br><span class="line">export PATH&#x3D;$PATH:$GOBIN</span><br></pre></td></tr></table></figure>
-
-- 让配置文件生效
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source $HOME&#x2F;.profile</span><br></pre></td></tr></table></figure>
-
-- go版本和go的配置信息检测
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go version</span><br><span class="line">go env</span><br></pre></td></tr></table></figure>
-
--   创建go目录
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric</span><br></pre></td></tr></table></figure>
-
-​    同时给go目录权限
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod -R 777 go</span><br></pre></td></tr></table></figure>
-
-#### 到此go环境安装完成
-
-- [x] ## Docker的安装
-
-  第一步：更新源
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
-
-  第二步：下载安装工具
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install \</span><br><span class="line">    apt-transport-https \</span><br><span class="line">    ca-certificates \</span><br><span class="line">    software-properties-common</span><br></pre></td></tr></table></figure>
-
-  此步骤如出现下面这种情况：
-
-  ![image-20200602195928439](C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602195928439.png)
-
-输入：
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rm &#x2F;var&#x2F;lib&#x2F;dpkg&#x2F;lock</span><br></pre></td></tr></table></figure>
-
-即可解决！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-
-第三步：添加官方密钥
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https:&#x2F;&#x2F;download.docker.com&#x2F;linux&#x2F;ubuntu&#x2F;gpg | sudo apt-key add -</span><br></pre></td></tr></table></figure>
-
-第四步：加入apt仓库中
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository \</span><br><span class="line">   &quot;deb [arch&#x3D;amd64] https:&#x2F;&#x2F;download.docker.com&#x2F;linux&#x2F;ubuntu \</span><br><span class="line">   $(lsb_release -cs) \</span><br><span class="line">   stable&quot;</span><br></pre></td></tr></table></figure>
-
-第五步：下载社区版docker-ce
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install docker-ce</span><br></pre></td></tr></table></figure>
-
-第六步：完成上面操作之后输入
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br></pre></td></tr></table></figure>
-
-![image-20200602200433318](C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602200433318.png)
-
-第七步：此时已经安装好Docker了，但是还需要一些小操作。因为普通用户没有权限 
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo groupadd docker    创建docker组</span><br><span class="line"></span><br><span class="line">sudo usermod -aG docker XXX(XXX是当前用户名)</span><br></pre></td></tr></table></figure>
-
-第八步：下面添加阿里云的Docker镜像： 
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p &#x2F;etc&#x2F;docker     </span><br><span class="line"></span><br><span class="line">sudo vim &#x2F;etc&#x2F;docker&#x2F;daemon.json</span><br></pre></td></tr></table></figure>
-
-第九步：将以下内容写入daemon.json
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> &quot;registry-mirrors&quot;: [&quot;https:&#x2F;&#x2F;obou6wyb.mirror.aliyuncs.com&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-第十步：接下来输入：
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload </span><br><span class="line">sudo systemctl restart docker </span><br><span class="line">sudo chmod -R 777 &#x2F;var&#x2F;run&#x2F;docker.sock</span><br><span class="line">docker version</span><br></pre></td></tr></table></figure>
-
-![image-20200602201653322](C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602201653322.png)
-
-- [x] ## Docker-compose的安装
-
-  1.17.0版本
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L https:&#x2F;&#x2F;github.com&#x2F;docker&#x2F;compose&#x2F;releases&#x2F;download&#x2F;1.17.0&#x2F;docker-compose-&#96;uname -s&#96;-&#96;uname -m&#96; -o &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure>
-
-  给与docker-compose权限
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure>
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose --version</span><br></pre></td></tr></table></figure>
-
-  显示：docker-compose version 1.17.0, build ac53b73
-
-  如果想改变docker-compose版本为1.24.0
-
-  则
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -L https:&#x2F;&#x2F;github.com&#x2F;docker&#x2F;compose&#x2F;releases&#x2F;download&#x2F;1.24.0&#x2F;docker-compose-&#96;uname -s&#96;-&#96;uname -m&#96; -o &#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker-compose</span><br></pre></td></tr></table></figure>
-
-  即可！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-
-- [x] ## 第五步：下载fabric和fabric-samples
-
-  将fabric1.4.1以及fabric-samples1.4.1下载之后上传到虚拟机中
-
-  这里提供一个比较快的下载方式：
-
-  &lt;img src=&quot;C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602203707293.png&quot; alt=&quot;image-20200602203707293&quot; style=&quot;zoom:50%;&quot; /&gt;
-
-  ![image-20200602203948338](C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602203948338.png)
-
-  这种方式是可以直接下载fabric以及fabric-samples，但是速度较慢，有时候也会下载失败，我们可以百度搜索“码云”，进入其官网，
-
-  ![image-20200602204247943](C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602204247943.png)
-
-  ![image-20200602204500562](C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602204500562.png)
-
-  导入之后就可以下载到本地了，速度还是相当快的。
-
-  将本地文件上传到虚拟机，我用的xftp，但是连接的时候遇到问题：
-
-  出现：
-
-  *SFTP 子系统申请已拒绝 请确保ssh连接的sftp子系统设置有效*
-
-  解决办法：
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> 输入命令：sudo vi &#x2F;etc&#x2F;ssh&#x2F;sshd_config</span><br><span class="line"> 将 &#x2F;etc&#x2F;ssh&#x2F;sshd_config 中的</span><br><span class="line"></span><br><span class="line">Subsystem      sftp    &#x2F;usr&#x2F;libexec&#x2F;openssh&#x2F;sftp-server </span><br><span class="line">改为（没有这一行，就新添加）</span><br><span class="line">Subsystem       sftp    internal-sftp</span><br><span class="line"></span><br><span class="line">重启sshd后，sftp正常工作了。</span><br><span class="line"></span><br><span class="line">sudo  &#x2F;etc&#x2F;init.d&#x2F;ssh reload</span><br><span class="line">sudo  &#x2F;etc&#x2F;init.d&#x2F;ssh restart</span><br></pre></td></tr></table></figure>
-
-  ![image-20200602205159939](C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602205159939.png)
-
-
-
-  fabric1.4.1解压文件夹可以直接传输，但是fabric-samples解压后的文件夹传输出错，解决办法就是将fabric-samples1.4.1的压缩包上传，然后再解压。
-
-
-
-  ![image-20200602205606694](C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602205606694.png)
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar zxvf fabric-samples-1.4.1.tar.gz</span><br></pre></td></tr></table></figure>
-
-  ![image-20200602205917179](C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602205917179.png)
-
-
-
-细节提醒：之前可能会在hyperledger下定义一个空的fabric文件夹，将fabric1.4.1和fabric-samples拷贝到hyperledger下之前，把空的fabric文件夹删除
-
-
-
-- [x] ## 第六步：
-
-  ## cd 到first-network文件夹下
-
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd go&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;fabric-samples&#x2F;first-network</span><br></pre></td></tr></table></figure>
-
-  启动e2e网络，镜像会自动拉取
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo .&#x2F;byfn.sh up</span><br></pre></td></tr></table></figure>
-
-​     ![image-20200602211821948](C:\Users\马恩阳\AppData\Roaming\Typora\typora-user-images\image-20200602211821948.png)
-
-出现END，即启动成功！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
-
-
-
-关闭e2e网络
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo .&#x2F;byfn.sh up</span><br></pre></td></tr></table></figure></code></pre><p>  ​          </p>
-<p>  ​     </p>
-
+        <p>hexo文件夹下使用如下命令新建md文件</p>
+<p>hexo n 文件名</p>
+<p>在此目录下E:\blog-tools\Workspaces\hexo\source\_posts </p>
+<p>会看见自己建的md文件</p>
+<p>之后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo generate  &#x2F;&#x2F; 简写：hexo g，生成静态文件，会在当前目录下生成一个public文件夹</span><br><span class="line">hexo server       &#x2F;&#x2F; 简写：hexo s，启动本地服务，用于博客的预览</span><br><span class="line">hexo deploy       &#x2F;&#x2F; 简写：hexo d，部署到远程（如GitHub，可以在_config.yml中配置）</span><br></pre></td></tr></table></figure>
       
 
       
@@ -469,7 +258,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://mxuer-zut.github.io/2020/06/15/01ubuntu%E6%90%AD%E5%BB%BAfabric1.4.1%E5%8F%8A%E8%BF%90%E8%A1%8Cfirst-network/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://mxuer-zut.github.io/2020/06/15/process-blog/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -483,18 +272,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/06/15/03%E5%9C%A82first-network%E5%9F%BA%E7%A1%80%E4%B8%8A%E5%AE%89%E8%A3%85%E6%96%B0%E7%9A%84fabcar%E8%BF%9E%E7%A0%81/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          03在2first-network基础上安装新的fabcar连码
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/01/08/warehouse-network/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">warehouse-network</div>
+    <a href="/2020/06/15/02fabric-sdk-java/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">02fabric-sdk-java</div>
       <i class="icon-circle-right"></i>
     </a>
   
